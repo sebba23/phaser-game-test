@@ -13,38 +13,46 @@ var config = {
     },
     scene: {
         preload: preload,
-        create: create
+        create: create,
+        update: update
     }
 };
 
+var text;
 var game = new Phaser.Game(config);
+let rect;
+let graphics;
+let speedX = 50;
+let speedY = 50;
+let logo;
 
-function preload ()
-{
+function preload () {
     this.load.setBaseURL('http://labs.phaser.io');
-
-    this.load.image('sky', 'assets/skies/space3.png');
     this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-    this.load.image('red', 'assets/particles/red.png');
+    text = this.add.text(10, 10, '', { fill: '#00ff00' });
 }
 
-function create ()
-{
-    this.add.image(400, 300, 'sky');
+function create () {
+    rect = new Phaser.Geom.Rectangle(250, 200, 300, 200);
 
-    var particles = this.add.particles('red');
+    graphics = this.add.graphics({ fillStyle: { color: 0x0000ff } });
 
-    var emitter = particles.createEmitter({
-        speed: 100,
-        scale: { start: 1, end: 0 },
-        blendMode: 'ADD'
+    graphics.fillRectShape(rect);
+    graphics.setInteractive(rect, Phaser.Geom.Rectangle.Contains);
+
+    graphics.on('pointerdown', function() {
+        console.log('clicked');
+        speedX += 20;
+        speedY += 20;
+        logo.setVelocity(speedX, speedY);
     });
 
-    var logo = this.physics.add.image(400, 100, 'logo');
+    logo = this.physics.add.image(400, 100, 'logo');
 
-    logo.setVelocity(100, 200);
+    logo.setVelocity(speedX, speedY);
     logo.setBounce(1, 1);
     logo.setCollideWorldBounds(true);
+}
 
-    emitter.startFollow(logo);
+function update () {
 }
