@@ -1,0 +1,9 @@
+Make button look like a button
+Show progress bar that fills up gradually
+When progress reaches 100, remove button and tell user how long they took to get to 100
+Offer Try Again button
+Initial screen: show instructions and a Start button
+Show elapsed time as you play
+Play music as you pla
+Play a sound every time user fills up 10% more
+Show a red/green light and punish user for tapping the button when light is red
